@@ -51,7 +51,7 @@ body::before {
 }
 
 .home-page {
-  background: url("images/minimalisthome") center / cover fixed no-repeat;
+  background: url("images/minimalisthome.webp") center / cover fixed no-repeat;
 }
 
 .home-page::before {

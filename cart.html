@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>EcoLoop — Cart</title>
+    <title>EcoLoop — Buy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -28,28 +28,79 @@
           <a href="index.html">Home</a>
           <a href="about.html">About</a>
           <a href="product.html">Product</a>
-          <a href="cart.html" aria-current="page">Cart</a>
+          <a href="cart.html" aria-current="page">Buy</a>
         </nav>
       </div>
     </header>
 
     <main>
-      <h1 class="page-title">Shopping cart</h1>
-      <p class="subtitle">
-        Mock checkout area for your class project. Add pricing logic, quantity controls, and checkout
-        steps later if needed.
-      </p>
+      <h1 class="page-title">Buy</h1>
       <div class="panel cart-panel">
-        <h2>EcoLoop starter bundle</h2>
-        <p>
-          Includes one EcoLoop planter unit, filter starter pack, and setup guide. This is placeholder
-          cart content for presentation/demo use.
-        </p>
-        <p><strong>Subtotal:</strong> $0.00 (demo)</p>
-        <div class="btn-row">
-          <a class="btn btn-primary" href="product.html">Continue shopping</a>
-          <a class="btn btn-ghost" href="#">Checkout (mock)</a>
-        </div>
+        <h2>Select your items</h2>
+        <p>Choose the full EcoLoop product, replacement filters, or both for your demo cart view.</p>
+
+        <form class="cart-options" action="#" method="post">
+          <label class="cart-option">
+            <input
+              type="checkbox"
+              name="item_full_product"
+              checked
+              data-price="700"
+              data-qty-input="qty_full_product"
+            />
+            <img
+              class="cart-option-image"
+              src="images/product.avif"
+              alt="EcoLoop full product"
+              loading="lazy"
+            />
+            <div>
+              <strong>EcoLoop full product</strong>
+              <p class="cart-price">$700</p>
+              <p>Includes planter unit, starter filter pack, and setup guide.</p>
+            </div>
+            <input
+              class="cart-qty"
+              type="number"
+              name="qty_full_product"
+              min="1"
+              value="1"
+              data-role="item-quantity"
+              aria-label="Quantity for EcoLoop full product"
+            />
+          </label>
+
+          <label class="cart-option">
+            <input
+              type="checkbox"
+              name="item_replacement_filter"
+              data-price="40"
+              data-qty-input="qty_replacement_filter"
+            />
+            <img
+              class="cart-option-image"
+              src="images/replacemetfilter.webp"
+              alt="EcoLoop replacement filter"
+              loading="lazy"
+            />
+            <div>
+              <strong>Replacement filter</strong>
+              <p class="cart-price">$40</p>
+              <p>Swap-in filter pack for ongoing EcoLoop maintenance.</p>
+            </div>
+            <input
+              class="cart-qty"
+              type="number"
+              name="qty_replacement_filter"
+              min="1"
+              value="1"
+              data-role="item-quantity"
+              aria-label="Quantity for replacement filter"
+            />
+          </label>
+        </form>
+
+        <p><strong>Subtotal:</strong> <span id="cart-subtotal">$0.00</span></p>
       </div>
     </main>
 
@@ -59,5 +110,47 @@
         <span><a href="index.html">Back to home</a></span>
       </div>
     </footer>
+
+    <script>
+      const itemChecks = document.querySelectorAll('.cart-option input[type="checkbox"]');
+      const subtotalEl = document.getElementById("cart-subtotal");
+
+      function updateSubtotal() {
+        let subtotal = 0;
+
+        itemChecks.forEach((checkbox) => {
+          const qtyInputName = checkbox.dataset.qtyInput;
+          const qtyInput = document.querySelector(`input[name="${qtyInputName}"]`);
+          const unitPrice = Number(checkbox.dataset.price || 0);
+          const qtyValue = Number(qtyInput?.value || 0);
+          const qty = Number.isFinite(qtyValue) && qtyValue > 0 ? qtyValue : 1;
+
+          if (qtyInput) {
+            qtyInput.value = String(qty);
+          }
+
+          if (checkbox.checked) {
+            subtotal += unitPrice * qty;
+          }
+        });
+
+        subtotalEl.textContent = `$${subtotal.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}`;
+      }
+
+      itemChecks.forEach((checkbox) => {
+        checkbox.addEventListener("change", updateSubtotal);
+
+        const qtyInput = document.querySelector(`input[name="${checkbox.dataset.qtyInput}"]`);
+        if (qtyInput) {
+          qtyInput.addEventListener("input", updateSubtotal);
+          qtyInput.addEventListener("change", updateSubtotal);
+        }
+      });
+
+      updateSubtotal();
+    </script>
   </body>
 </html>

@@ -297,6 +297,25 @@ main {
   margin-bottom: 0;
 }
 
+.story-section {
+  max-width: 84ch;
+  margin: 0 auto;
+  text-align: center;
+  padding: 2rem 2.2rem;
+}
+
+.story-section h2 {
+  margin: 0 0 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 3vw, 1.85rem);
+}
+
+.story-section p {
+  max-width: 72ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .mission-block {
   border-left: 3px solid var(--accent);
   padding: 0.35rem 0 0.35rem 1.25rem;

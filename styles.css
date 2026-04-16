@@ -109,28 +109,30 @@ img {
 }
 
 .logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: -0.02em;
-  color: var(--text);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  flex-shrink: 0;
+  line-height: 0;
+  border-radius: 10px;
 }
 
-.logo-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dim) 100%);
-  display: grid;
-  place-items: center;
-  font-size: 0.65rem;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: 0;
+.logo:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.logo-img {
+  height: 4.5rem;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+@media (max-width: 520px) {
+  .logo-img {
+    height: 3.5rem;
+  }
 }
 
 .nav {
@@ -506,18 +508,6 @@ main {
   height: 16px;
 }
 
-.split {
-  display: grid;
-  gap: 2rem;
-  align-items: start;
-}
-
-@media (min-width: 860px) {
-  .split {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .panel {
   background: var(--bg-elevated);
   border: 1px solid var(--ring);
@@ -554,22 +544,10 @@ main {
 }
 
 .product-visual {
-  aspect-ratio: 4 / 3;
-  border-radius: calc(var(--radius) + 4px);
-  border: 1px solid var(--ring);
-  background: linear-gradient(160deg, var(--surface) 0%, #121816 100%);
-  display: grid;
-  place-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.product-visual::before {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  background: conic-gradient(from 120deg, transparent, rgba(61, 214, 140, 0.12), transparent 45%);
-  animation: spin 18s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: visible;
 }
 
 @keyframes spin {
@@ -578,23 +556,18 @@ main {
   }
 }
 
-.product-placeholder {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 2rem;
+.product-mockup {
+  width: min(640px, 120%);
+  max-width: none;
+  height: auto;
+  object-fit: contain;
 }
 
-.product-placeholder strong {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  margin-bottom: 0.35rem;
-}
-
-.product-placeholder span {
-  color: var(--text-muted);
-  font-size: 0.9rem;
+@media (max-width: 899px) {
+  .product-mockup {
+    width: 100%;
+    max-width: 560px;
+  }
 }
 
 .hero-media-grid {
